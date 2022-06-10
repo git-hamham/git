@@ -1,0 +1,87 @@
+<script type="text/javascript" src="https://apps.paidy.com"></script>
+
+<form method="post" name="hidden_form" id="hidden_form" action="YourActionHere">
+  <input type="hidden" name="paidy_payment_id" id="paidy_payment_id">
+</form>
+
+<button id="auth-btn" onclick="paidyPay()">Paidyで支払う(旧API)</button>
+
+<script>
+  var paidy = Paidy.configure({
+    key: "pk_test_53o42j3ip71ifa93r8f0smp9qg",
+    logo_url: "",
+    callback: function(data){
+  							 document.write(data.payment_id + "</br>");
+							   document.write(data.status + "</br>");
+                 document.write(JSON.stringify(data));
+    }
+  });
+
+  function paidyPay(){
+    //const text = "23b2e780fd1f7681e46bc8683099bd65ec3a20517bc66657b7bc0900132a33e4";
+    //document.write(text);
+    //document.write("</br>");
+
+    // エンコード
+    //const encoded = btoa(encodeURIComponent(text));
+    //document.write(encoded + "</br>");
+    //document.write("</br>");
+
+    // デコード
+    //const decoded = decodeURIComponent(atob(encoded));
+    //=> "テスト"
+    //document.write(decoded);
+
+    <!--以下のjsonオブジェクトがAuthorizeリクエストに利用されます-->
+
+    var data = {
+      "buyer": {
+        "name": "山田　太郎",
+        "name2": "ヤマダ　タロウ",
+        "dob": "1990-10-25",
+        "email": {
+          "address": "successful.payment@paidy.com"
+        },
+        "address": {
+          "address1": "AXISビル 10F",
+          "address2": "六本木4-22-1",
+          "address3": "港区",
+          "address4": "東京都",
+          "postal_code": "106-2004"
+        },
+        "phone": {
+          "number": "08000000001"
+        }
+      },
+      "order": {
+        "items": [{
+          "item_id": "1",
+          "title": "アイテム1",
+          "amount": 10000.0,
+          "quantity": 1
+        }],
+        "tax": 0.0,
+        "shipping": 0.0,
+        "total_amount": 10000.0,
+        "order_ref": "88e021674"
+      },
+      "merchant_data": {
+        "store": "Test Store",
+        "customer_age": 2,
+        "last_order": 215,
+        "last_order_amount": 3500.0,
+        "known_address": false,
+        "num_orders": 2,
+        "ltv": 100.0,
+        "ip_address": "203.0.113.0"
+      },
+      "options": {
+        "authorize_type": "extended"
+      },
+      "checksum": "YourChecksumHere",
+    };
+    paidy.launch(data);
+    return false;
+  };
+
+</script>

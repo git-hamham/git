@@ -1,0 +1,5 @@
+checksum.phpのなかの2行目の後半のペイメントIDを書き換えて保存
+
+コマンドプロンプトから以下で実行
+
+php php C:\work\Paidy\checksum\checksum.php
